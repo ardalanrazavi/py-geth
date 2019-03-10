@@ -15,7 +15,7 @@ if sys.version_info.major == 2:
 def is_port_open(port):
     sock = socket.socket()
     try:
-        sock.bind(('127.0.0.1', port))
+        sock.bind(('127.0.0.1', int(port)))
     except socket.error:
         return False
     else:

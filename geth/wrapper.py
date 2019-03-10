@@ -44,6 +44,8 @@ def get_max_socket_path_length():
 
 
 def construct_test_chain_kwargs(**overrides):
+    # Adding Bootstap option
+    # bootnode
     overrides.setdefault('unlock', '0')
     overrides.setdefault('password', DEFAULT_PASSWORD_PATH)
     overrides.setdefault('mine', True)
@@ -130,7 +132,8 @@ def construct_popen_command(data_dir=None,
                             ws_api=None,
                             suffix_args=None,
                             suffix_kwargs=None,
-                            shh=None):
+                            shh=None,
+                            bootnode=None):
     if geth_executable is None:
         geth_executable = get_geth_binary_path()
 
@@ -193,6 +196,10 @@ def construct_popen_command(data_dir=None,
 
     if ipc_path is not None:
         command.extend(('--ipcpath', ipc_path))
+
+    if bootnode is not None:
+        command.extend(("--bootnodes", bootnode))
+        command.extend(("--bootnodesv5", bootnode))
 
     if verbosity is not None:
         command.extend((
